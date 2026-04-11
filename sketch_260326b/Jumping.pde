@@ -1,3 +1,5 @@
+
+// This is the tab that holds both the PVector class along with the Collision for the Platforms and Ground.
 class Player { //Player Class
 //PVECTOR SET UP//
   PVector position; //Player Position
@@ -5,7 +7,7 @@ class Player { //Player Class
   PVector acceleration; //Player Acceleration
 
   float r = 10; // Radius of Player Ball
-  boolean onGround; //
+  boolean onSpawn; //
 
 //Gravity mechanic I took inspiration from an example shown in class!
   Player(float x, float y) {
@@ -33,16 +35,6 @@ class Player { //Player Class
     position.add(velocity); //Add Velocity to Position.
   }
   
-//GROUND COLLISION SET UP//
-  void checkGround(float groundY) {
-    if (position.y + r >= groundY) {
-      position.y = groundY - r;  // Set position to be right against ground.
-      velocity.y = 0; // Velocity set to 0 when falling when on ground.
-      onGround = true;
-    } else {
-      onGround = false; //To detect when not on ground.
-    }
-  }
 
   
  void checkPlatform(float px, float py, float pw, float ph) {
@@ -63,7 +55,7 @@ class Player { //Player Class
     ) {
       position.y = top - r;
       velocity.y = 0;
-      onGround = true;
+      onSpawn = true;
     }
 
     //Platform Bottom Collision
@@ -99,7 +91,7 @@ class Player { //Player Class
 
 //Jumping Code
   void jump() {
-    if (key == ' ' && onGround) { //Set the key for jumping as space. Wanted to do the Up Arrow but I forgot what key that would be for.
+    if (key == ' ' && onSpawn) { //Set the key for jumping as space. Wanted to do the Up Arrow but I forgot what key that would be for.
       velocity.y = -10; //Have the Velocity be negative to be able to go up.
     }
   }
