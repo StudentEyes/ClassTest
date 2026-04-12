@@ -1,4 +1,6 @@
 Player player; //Class for the Player
+boolean gameOver = false; //The Game Over Screen! It's currently not on at the moment.
+boolean gameWon = false; //The ending screen for if you make it to the end!
 
 // PLATFORM SET UP //
 int totalPlatforms = 10;
@@ -12,7 +14,7 @@ int total = 15; //Number of clouds supposed to appear.
 
 // VOID SETUP //
 void setup() {
-  size(600, 400); //Set Canvas Size
+  size(800, 400); //Set Canvas Size
   frameRate(60);
   noStroke();
   
@@ -54,6 +56,14 @@ void setup() {
 void draw() {
   background(#84C4F7); //Set background colour to just a light grey.
   
+  // GAME OVER SECTION //
+  if (!gameOver){
+    
+  } else {
+  }
+  
+ 
+  
    fill(255);//Set Cloud Colour to White
   for(int i = 0; i < total; i++){
     ellipse(cx[i], cy[i], 30, 20);
@@ -62,7 +72,7 @@ void draw() {
   }
   
 player.update(); //Update Player Location.
-  
+ 
   player.onPlatform = false; //To remind code for when the player isn't touching the platform.
   
   rectMode(CORNER); //Set Shape mode to Corner
@@ -78,10 +88,55 @@ player.update(); //Update Player Location.
     );
   }
 
- 
   player.display(); //Display the player.
+  
+   if (player.position.y > 400) { //Checks if the player has fallen past 400.
+  }
+  
+   // GAME WON SECTION //
+  Platform finish = platforms[1];
+  
+  if(
+  player.position.x > finish.x &&
+  player.position.x < finish.x + finish.w &&
+  player.position.y + player.r >= finish.y &&
+  player.position.y - player. r <= finish.y + finish.h
+  ){
+    gameWon = true;
+  }
+  
+  else if (gameWon) {
+    background(0);
+    
+    fill(255);
+    textAlign(CENTER);
+    
+    textSize(42);
+    text("YOU WIN!", width/2, height/2);
+  }
+  
+ else {
+  background(#021139);
+  
+  fill(255); //Make Text white
+  textAlign(CENTER); //Align text to center
+  textSize(42); //Set Font Size
+  text("YOU FELL. RESTART? [R]", width/2, height/2); //Text Code to mimic a Game Over Screen
+}
 }
 
-void keyPressed() { //Check if a key has been pressed. Being the Space Key
-  player.jump();
+  
+  void restartGame() { //When restarting the game, set a new Player
+    player = new Player(25, 200);
+    gameOver = false;
+    gameWon = false;
+  }
+  
+  // KEY PRESSING COMMANDS //
+  
+void keyPressed() { //Check if a key has been pressed.
+if (key == 'r' && gameOver){ //If the 'R' key has been pressed during the Game Over screen. Restart!
+  restartGame(); 
+}
+  player.jump(); //When pressed, the player jumps!
 }
