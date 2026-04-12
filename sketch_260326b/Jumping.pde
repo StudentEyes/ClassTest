@@ -1,13 +1,13 @@
 
 // This is the tab that holds both the PVector class along with the Collision for the Platforms and Ground.
-class Player { //Player Class
+class Player { //Player Class, in hindsight I should probably rename this to 'Jumping' to match with the tab, but whatever lol
 //PVECTOR SET UP//
   PVector position; //Player Position
   PVector velocity; //Player Velocity
   PVector acceleration; //Player Acceleration
 
   float r = 10; // Radius of Player Ball
-  boolean onSpawn; //
+  boolean onPlatform; //
 
 //Gravity mechanic I took inspiration from an example shown in class!
   Player(float x, float y) {
@@ -50,12 +50,13 @@ class Player { //Player Class
     //Platform Top Collision
     if (
       velocity.y > 0 &&
-      position.x > left && position.x < right &&
-      position.y + r > top && position.y + r < top + 10
+      position.x + r > left && position.x - r < right &&
+      position.y + r >= top &&
+      position.y + r <= top + velocity.y + 1
     ) {
       position.y = top - r;
       velocity.y = 0;
-      onSpawn = true;
+      onPlatform = true;
     }
 
     //Platform Bottom Collision
@@ -91,14 +92,14 @@ class Player { //Player Class
 
 //Jumping Code
   void jump() {
-    if (key == ' ' && onSpawn) { //Set the key for jumping as space. Wanted to do the Up Arrow but I forgot what key that would be for.
+    if (key == ' ' && onPlatform) { //Set the key for jumping as space. Wanted to do the Up Arrow but I forgot what key that would be for.
       velocity.y = -10; //Have the Velocity be negative to be able to go up.
     }
   }
 
 //Appearance of the Player/Ball.
   void display() {
-    fill(#5983C9);
-    ellipse(position.x, position.y, r*2, r*2);
+    fill(#5983C9); //Set Player Ball to a Dark Blue
+    ellipse(position.x, position.y, r*2, r*2); //Set Player Shape and Size
   }
 }
