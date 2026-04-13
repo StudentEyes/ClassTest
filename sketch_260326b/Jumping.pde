@@ -99,7 +99,7 @@ class Player { //Player Class, in hindsight I should probably rename this to 'Ju
 
 //Appearance of the Player/Ball.
   void display() {
-    fill(#5983C9); //Set Player Ball to a Dark Blue
+    fill(#95051A); //Set ball colour to Dark Red for contrast.
     ellipse(position.x, position.y, r*2, r*2); //Set Player Shape and Size
   }
 }
